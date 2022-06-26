@@ -17,20 +17,35 @@ class StudentGroup(models.Model):
         verbose_name_plural = "Группы студентов"
 
 class Student(models.Model):
-    name = models.CharField(verbose_name="Имя", max_length=100, 
-                                blank=True, null=True)
+
+    SURNAME_CHOICES = (("Petrenko", "Петренко"),
+                        ("Ivanenko", "Иваненко"))
+
+    name = models.CharField(verbose_name="Имя", 
+                                max_length=100,
+                                blank=True, 
+                                null=True)
+
+    surname = models.CharField(verbose_name="Фамилия", 
+                                max_length=100, 
+                                blank=True, 
+                                null=True,
+                                choices=SURNAME_CHOICES)                           
 
     birthday = models.DateField(verbose_name="День рождения", 
-                                null=True, blank=True)
+                                null=True, 
+                                blank=True)
 
-    group = models.ForeignKey(StudentGroup, verbose_name="Группа", on_delete=models.SET_NULL, 
-                                null=True, blank=True)
+    group = models.ForeignKey(StudentGroup, verbose_name="Группа", 
+                                on_delete=models.SET_NULL, 
+                                null=True, 
+                                blank=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.name += '1111'
+        #self.name += '1111'
         
         
         super().save(*args, **kwargs)
